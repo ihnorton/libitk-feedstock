@@ -20,6 +20,7 @@ requirements:
     - {{ compiler("cxx") }}
     - cmake    >=3.3
     - ninja
+  host:
     - expat    2.1.*
     - hdf5     1.8.18|1.8.18.*  # [not win]
     - jpeg     9*
