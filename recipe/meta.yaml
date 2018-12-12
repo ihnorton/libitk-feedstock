@@ -1,5 +1,9 @@
 {% set version = "5.0b01" %}
 
+# NOTE: this could go back to 1.8 when bumping to >=v5.0b02, because compat was restored in
+#       https://github.com/InsightSoftwareConsortium/ITK/commit/c090e650ab0e2062
+{% set hdf5_version = ">=1.10.2"
+
 package:
   name: libitk
   version: "{{version}}"
@@ -23,7 +27,7 @@ requirements:
     - python   # [win]
   host:
     - expat    2.1.*
-    - hdf5     1.8.18|1.8.18.*  # [not win]
+    - hdf5     {{ hdf5_version }} # [not win]
     - jpeg     9*
     - libtiff  4.0.*
     - libpng   >=1.6.27,<1.7
@@ -31,7 +35,7 @@ requirements:
     - vc 14    # [win and py>=36]
   run:
     - expat    2.1.*
-    - hdf5     1.8.18|1.8.18.*  # [not win]
+    - hdf5     {{ hdf5_version }} # [not win]
     - jpeg     9*
     - libtiff  4.0.*
     - libpng   >=1.6.27,<1.7
