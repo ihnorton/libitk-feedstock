@@ -2,7 +2,7 @@
 
 # NOTE: this could go back to 1.8 when bumping to >=v5.0b02, because compat was restored in
 #       https://github.com/InsightSoftwareConsortium/ITK/commit/c090e650ab0e2062
-{% set hdf5_version = ">=1.10.2"
+{% set hdf5_version = ">=1.10.2" %}
 
 package:
   name: libitk
