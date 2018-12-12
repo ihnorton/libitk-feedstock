@@ -6,8 +6,14 @@ if [ $ARCH == 32 -a "${OSX_ARCH:-notosx}" == "notosx" ]; then
     export CXXFLAGS="${CXXFLAGS} -m32"
 fi
 
+declare -a CMAKE_PLATFORM_FLAGS
+if [[ ${target_platform} =~ .*linux.* ]]; then
+  CMAKE_PLATFORM_FLAGS+=(-DCMAKE_FIND_ROOT_PATH="${PREFIX};${BUILD_PREFIX}/${HOST}/sysroot")
+  CMAKE_PLATFORM_FLAGS+=(-DCMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES:PATH="${BUILD_PREFIX}/${HOST}/sysroot/usr/include")
+fi
+
 BUILD_DIR=${SRC_DIR}/build
-mkdir ${BUILD_DIR}
+mkdir -p ${BUILD_DIR}
 cd ${BUILD_DIR}
 
 
@@ -27,8 +33,9 @@ cmake \
     -D ITK_BUILD_DEFAULT_MODULES:BOOL=ON \
     -D Module_ITKReview:BOOL=ON \
     -D CMAKE_BUILD_TYPE:STRING=RELEASE \
-    -D "CMAKE_SYSTEM_PREFIX_PATH:FILEPATH=${PREFIX}" \
+    -D "CMAKE_PREFIX_PATH:FILEPATH=${PREFIX}" \
     -D "CMAKE_INSTALL_PREFIX=${PREFIX}" \
+    "${CMAKE_PLATFORM_FLAGS[@]}" \
     "${SRC_DIR}"
 
 ninja -j $((${CPU_COUNT}+1))

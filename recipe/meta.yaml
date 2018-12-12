@@ -1,4 +1,4 @@
-{% set version = "4.13.0" %}
+{% set version = "5.0b01" %}
 
 package:
   name: libitk
@@ -6,19 +6,18 @@ package:
 
 source:
   url: https://github.com/InsightSoftwareConsortium/ITK/archive/v{{version}}.tar.gz
-  sha256: 37122d65b89699df33f34e0859f1e7adf5a6222060dc1c47383ff7aa4531223a
+  sha256: 0b744b4e367475426e57692c4509f99e74d2ef007579533767de6c7613b42b3c
 
 build:
     number: 0
-    skip: True   # [win and py36]
+    skip: True   # [win and py<36]
     features:
-    - vc9   # [win and py27]
-    - vc10  # [win and py34]
-    - vc14  # [win and py>=35]
+    - vc14  # [win and py>=36]
 
 requirements:
   build:
-    - toolchain
+    - {{ compiler("c") }}
+    - {{ compiler("cxx") }}
     - cmake    >=3.3
     - ninja
     - expat    2.1.*
@@ -28,9 +27,7 @@ requirements:
     - libpng   >=1.6.27,<1.7
     - zlib     1.2.*
     - python   # [win]
-    - vc 9     # [win and py27]
-    - vc 10    # [win and py34]
-    - vc 14    # [win and py>=35]
+    - vc 14    # [win and py>=36]
   run:
     - expat    2.1.*
     - hdf5     1.8.18|1.8.18.*  # [not win]
@@ -38,9 +35,7 @@ requirements:
     - libtiff  4.0.*
     - libpng   >=1.6.27,<1.7
     - zlib     1.2.*
-    - vc 9   # [win and py27]
-    - vc 10  # [win and py34]
-    - vc 14  # [win and py>=35]
+    - vc 14  # [win and py>=36]
 
 test:
   requires:
