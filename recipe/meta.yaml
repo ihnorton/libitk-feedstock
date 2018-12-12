@@ -20,6 +20,7 @@ requirements:
     - {{ compiler("cxx") }}
     - cmake    >=3.3
     - ninja
+    - python   # [win]
   host:
     - expat    2.1.*
     - hdf5     1.8.18|1.8.18.*  # [not win]
@@ -27,7 +28,6 @@ requirements:
     - libtiff  4.0.*
     - libpng   >=1.6.27,<1.7
     - zlib     1.2.*
-    - python   # [win]
     - vc 14    # [win and py>=36]
   run:
     - expat    2.1.*
