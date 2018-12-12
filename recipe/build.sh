@@ -43,5 +43,3 @@ ninja -j $((${CPU_COUNT}+1))
 cmake \
     -D CMAKE_INSTALL_PREFIX=$PREFIX \
     -P ${BUILD_DIR}/cmake_install.cmake
-
-
