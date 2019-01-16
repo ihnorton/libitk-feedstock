@@ -1,22 +1,30 @@
-{% set version = "5.0b01" %}
+{% set version = "5.0b03" %}
 
 # NOTE: this could go back to 1.8 when bumping to >=v5.0b02, because compat was restored in
 #       https://github.com/InsightSoftwareConsortium/ITK/commit/c090e650ab0e2062
-{% set hdf5_version = ">=1.10.2" %}
+{% set hdf5_version = ">=1.10.4" %}
 
 package:
   name: libitk
   version: "{{version}}"
 
 source:
-  url: https://github.com/InsightSoftwareConsortium/ITK/archive/v{{version}}.tar.gz
-  sha256: 0b744b4e367475426e57692c4509f99e74d2ef007579533767de6c7613b42b3c
+  #url: https://github.com/InsightSoftwareConsortium/ITK/archive/v{{version}}.tar.gz
+  #sha256: 7bf11a8be1352f7f9d68e8f759f8ebf60d922c8eb4436be7de26fb6c2ecac065
+  git_url: https://github.com/InsightSoftwareConsortium/ITK
+  git_rev: 786a1d59852ff40df453788c744a87b5c7027ddb
 
 build:
     number: 0
     skip: True   # [win and py<36]
     features:
     - vc14  # [win and py>=36]
+
+# Note: the run dependency on gxx_{} below is due to the fact that HDF5 includes GCC
+#       wrapper compilers, so it needs the same stack. Otherwise we end up pulling
+#       that stack from the host, and eventually get this error due to how ITK
+#       creates the config, vs how conda does replacement for the placeholder text.
+#       https://github.com/conda-forge/libitk-feedstock/issues/7
 
 requirements:
   build:
@@ -25,20 +33,20 @@ requirements:
     - ninja
     - python   # [win]
   host:
-    - expat    2.1.*
-    - hdf5     {{ hdf5_version }} # [not win]
-    - jpeg     9*
-    - libtiff  4.0.*
-    - libpng   >=1.6.27,<1.7
-    - zlib     1.2.*
+    - expat
+    - hdf5     {{ hdf5_version }} # [unix]
+    - jpeg
+    - libtiff
+    - libpng
+    - zlib
     - vc 14    # [win and py>=36]
   run:
-    - expat    2.1.*
-    - hdf5     {{ hdf5_version }} # [not win]
-    - jpeg     9*
-    - libtiff  4.0.*
-    - libpng   >=1.6.27,<1.7
-    - zlib     1.2.*
+    - expat
+    - hdf5     {{ hdf5_version }} # [unix]
+    - jpeg
+    - libtiff
+    - libpng
+    - zlib
     - vc 14  # [win and py>=36]
 
 test:
